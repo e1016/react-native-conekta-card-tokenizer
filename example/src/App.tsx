@@ -1,23 +1,43 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 
-import { StyleSheet, View, Text } from 'react-native';
-import { multiply } from 'react-native-conekta-card-tokenizer';
+import { StyleSheet, View, Text, Button } from 'react-native';
+import getCardToken, {
+  type ConektaCardToken,
+  type ConektaCard,
+} from 'react-native-conekta-card-tokenizer';
 
 export default function App() {
-  const [result, setResult] = React.useState<number | undefined>();
+  const [cardToken, setCardToken] = useState<string>('');
 
-  React.useEffect(() => {
-    multiply(3, 7).then(setResult);
-  }, []);
+  const createToken = async () => {
+    const data: ConektaCard = {
+      name: 'John Doe',
+      cardNumber: '4242424242424242',
+      cvc: '123',
+      expMonth: '01',
+      expYear: '2024',
+      publicKey: 'REPALCE_WITH_YOUR_PUBLIC_KEY',
+    };
+
+    const result: ConektaCardToken = await getCardToken(data);
+    console.log('result', result);
+    setCardToken(result.id);
+  };
 
   return (
     <View style={styles.container}>
-      <Text>Result: {result}</Text>
+      <Button title="Create Token" onPress={createToken} />
+      <Text style={styles.text}>Token: {cardToken || 'wait...'}</Text>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  text: {
+    fontSize: 20,
+    marginVertical: 20,
+    color: 'white',
+  },
   container: {
     flex: 1,
     alignItems: 'center',

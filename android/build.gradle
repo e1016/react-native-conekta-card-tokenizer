@@ -75,6 +75,10 @@ dependencies {
   // For > 0.71, this will be replaced by `com.facebook.react:react-android:$version` by react gradle plugin
   //noinspection GradleDynamicVersion
   implementation "com.facebook.react:react-native:+"
+
+  implementation fileTree(dir: 'libs', include: ['*.jar'])
+  implementation 'com.android.support:appcompat-v7:21.0.3'
+  implementation 'io.conekta:conektasdk:2.1'
 }
 
 if (isNewArchitectureEnabled()) {
