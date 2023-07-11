@@ -40,7 +40,6 @@ export default function getCardToken(
     ConektaCardTokenizer.getCardToken(
       card,
       (result: ConektaCardToken | string) => {
-        console.log(result);
         if (typeof result === 'string') {
           result = JSON.parse(result);
         }
@@ -48,7 +47,6 @@ export default function getCardToken(
         resolve(result);
       },
       (error: any) => {
-        console.log(error);
         reject(error);
       }
     );
